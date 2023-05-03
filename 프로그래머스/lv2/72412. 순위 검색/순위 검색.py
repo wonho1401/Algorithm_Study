@@ -1,41 +1,28 @@
-from itertools import combinations
+from collections import defaultdict
 from bisect import bisect_left
 
 def solution(info, query):
     answer = []
-    info_dict = {}
-    
-    for i in range(len(info)):
-        _info = info[i].split()
-        ikey = _info[:-1]
-        ivalue = _info[-1]
-        for j in range(5):
-            for c in combinations(ikey, j):
-                tmp = "".join(c)
-                if tmp in info_dict:
-                    info_dict[tmp].append(int(ivalue))
-                else:
-                    info_dict[tmp] = [int(ivalue)]
-    for k in info_dict:
-        info_dict[k].sort()
-    
+    dic = defaultdict(list)
+
+
+    for i in info:
+        i = i.split()
+        for lang in (i[0], '-'):
+            for skill in (i[1], '-'):
+                for career in (i[2], '-'):
+                    for food in (i[3], '-'):
+                        dic[lang + skill + career + food].append(int(i[4]))
+    for k in dic:
+        dic[k].sort()
+
     for q in query:
-        _query = q.split(' ')
-        qkey = _query[:-1]
-        qvalue = _query[-1]
-        
-        while 'and' in qkey:
-            qkey.remove("and")
-        while '-' in qkey:
-            qkey.remove('-')
-        qkey = "".join(qkey)
-        
-        if qkey in info_dict:
-            scores = info_dict[qkey]
-            
-            if scores:
-                e = bisect_left(scores, int(qvalue))
-                answer.append(len(scores) - e)
+        q = q.split()
+        tmp = (q[0]+q[2]+q[4]+q[6])
+        if tmp in dic:
+            idx = bisect_left(dic[tmp], int(q[7]))
+            answer.append(len(dic[tmp]) - idx)
         else:
             answer.append(0)
+
     return answer
