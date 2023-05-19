@@ -3,12 +3,10 @@ import math
 def check(place):
     players = []
     flag = True
-    # print(place)
     for i in range(5):
         for j in range(5):
             if place[i][j] == "P":
                 players.append([i, j])
-    # print(players)
     if len(players) == 0 or len(players) == 1:
         return flag
     else:
@@ -25,31 +23,25 @@ def check(place):
                 else:
                     # x가 같은 경우에는 둘 사이의 y에 벽
                     if players[i][0] == players[j][0]:
-                        # print("Same X", players[i], players[j])
                         if place[players[i][0]][(players[i][1] + players[j][1])//2] == "X":
                             flag = True
                         else:
                             flag = False
                             return flag
-                        # print(flag)
                      # y가 같은 경우에는 둘 사이의 x에 벽
                     elif players[i][1] == players[j][1]:
-                        # print("Same Y", players[i], players[j])
                         if place[(players[i][0] + players[j][0])//2][players[i][1]] == "X":
                             flag = True
                         else:
                             flag = False
                             return flag
-                        # print(flag)
                     # 대각선이면 그 반대 대각선 둘 다 벽
                     else:
-                        # print("Cross", players[i], players[j])
                         if place[players[i][0]][players[j][1]] == "X" and place[players[j][0]][players[i][1]] == "X":
                             flag = True
                         else:
                             flag = False
                             return flag
-                        # print(flag)
     return flag 
 
 def solution(places):
