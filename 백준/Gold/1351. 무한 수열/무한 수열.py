@@ -1,3 +1,5 @@
+# 주어진 N의 크기가 10^9를 넘어가면 dictionary와 재귀를 사용해 해결하도록 생각해보기
+
 n, p, q = map(int, input().split())
 
 dic = {}
